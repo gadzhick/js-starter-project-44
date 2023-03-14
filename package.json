@@ -1,7 +1,11 @@
 {
-  "name": "$name$",
-  "version": "$version$",
+  "name": "js-starter-project-44",
+  "type": "module",
+  "version": "1.0.0",
   "dependencies": {
-    $END$
+    "readline-sync": "^1.4.10"
+  },
+  "bin": {
+    "brain-games": "bin/brain-games.js"
   }
 }
