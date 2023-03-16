@@ -1,29 +1,18 @@
 import askQuestion from '../src/cli.js';
 import { processQuestion, QUESTIONS_COUNT } from '../src/index.js';
 
+function findGcd(x, y) {
+  if (y > x) return findGcd(y, x);
+  if (!y) return x;
+  return findGcd(y, x % y);
+}
 function generateQuestion() {
-  const operators = ['+', '-', '*'];
-
-  const operatorPosition = Math.floor(Math.random() * 3);
   const firstNumber = Math.floor(Math.random() * 100);
   const secondNumber = Math.floor(Math.random() * 100);
-  let correctAnswer;
 
-  switch (operatorPosition) {
-    case 0:
-      correctAnswer = (firstNumber + secondNumber).toString();
-      break;
-    case 1:
-      correctAnswer = (firstNumber - secondNumber).toString();
-      break;
-    case 2:
-      correctAnswer = (firstNumber * secondNumber).toString();
-      break;
-    default:
-      throw new Error('Internal server error.');
-  }
+  const question = `${firstNumber} ${secondNumber}`;
 
-  const question = `${firstNumber} ${operators[operatorPosition]} ${secondNumber}`;
+  const correctAnswer = findGcd(firstNumber, secondNumber).toString();
 
   return {
     question: question,
@@ -31,13 +20,13 @@ function generateQuestion() {
   };
 }
 
-export default function brainCalc() {
+export default function brainGcd() {
   console.info('Welcome to the Brain Games!');
   const name = askQuestion('May I have your name? ');
   console.info(`Hello, ${name}!`);
 
   try {
-    console.info('What is the result of the expression?');
+    console.info('Find the greatest common divisor of given numbers.');
     for (let i = 0; i < QUESTIONS_COUNT; i += 1) {
       const questionObject = generateQuestion();
       processQuestion(questionObject.question, questionObject.correctAnswer);
